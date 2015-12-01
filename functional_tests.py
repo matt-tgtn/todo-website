@@ -22,7 +22,7 @@ class NewVisitorTest(unittest.TestCase):
 		#Can you enter a to-do item straight away?
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertEqual(
-			input.get_attribute('placeholder'), 
+			inputbox.get_attribute('placeholder'), 
 			'Enter a to-do item'
 		)
 
@@ -30,12 +30,13 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys("Buy peacock feathers")
 
 		#When you hit enter the page updates and lists "1: Buy peacock feathers"
-		input.send_keys(Keys.ENTER)
+		inputbox.send_keys(Keys.ENTER)
 		
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
 		self.assertTrue(
-			any(row.text == "1: Buy peacock feathers" for row in rows)
+			any(row.text == "1: Buy peacock feathers" for row in rows),
+			"New item did not appear in table"
 		)
 		
 		#There should still be a text box to enter another task such as "Use peacock feathers to make a fly"
