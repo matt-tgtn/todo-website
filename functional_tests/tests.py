@@ -55,7 +55,7 @@ class NewVisitorTest(LiveServerTestCase):
 
 		#Now a new user, Francis, comes to the site
 				
-		#We use a new session to erase Edith's session and ensure no cookies persist (e.g.)
+		#! We use a new session to erase Edith's session and ensure no cookies persist (e.g.)
 		self.browser.quit()
 		self.browser = webdriver.Firefox()
 		
@@ -74,7 +74,7 @@ class NewVisitorTest(LiveServerTestCase):
 		
 		
 		#Francis gets his own URL
-		francis_list_url - self.browser.current_url
+		francis_list_url = self.browser.current_url
 		self.assertRegex(francis_list_url, '/lists/.+')
 		self.assertNotEqual(francis_list_url, edith_list_url)
 		
