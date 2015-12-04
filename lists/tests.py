@@ -6,6 +6,9 @@ from django.template.loader import render_to_string
 from lists.views import home_page
 from lists.models import Item
 
+
+'''UNIT TEST FILE'''
+
 class HomePageTest(TestCase):
 	
 	def test_root_url_resolves_to_home_page_view(self):
