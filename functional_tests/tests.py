@@ -1,17 +1,18 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 
 '''FUNCTIONAL TEST file'''
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
 
 	def setUp (self):
 		self.browser = webdriver.Firefox()
 		self.browser.implicitly_wait(3)
 
 	def tearDown (self):
+		self.browser.refresh()
 		self.browser.quit()
 		
 	def check_for_row_in_list_table(self, row_text):
@@ -92,12 +93,14 @@ class NewVisitorTest(LiveServerTestCase):
 		self.browser.get(self.live_server_url)
 		self.browser.set_window_size(1024, 768)
 		
+		##Was 1024x768 and test parameters were 512 with 5 delta
+		
 		#She notices the input box is nicely centered
 		inputbox = self.browser.find_element_by_id('id_new_item')
 		self.assertAlmostEqual(
 			inputbox.location['x'] + inputbox.size['width'] / 2,
 			512,
-			delta=5
+			delta=10
 		
 		)
 		
@@ -107,7 +110,7 @@ class NewVisitorTest(LiveServerTestCase):
 		self.assertAlmostEqual(
 			inputbox.location['x'] + inputbox.size['width'] / 2,
 			512,
-			delta=5
+			delta=10
 		
 		)
 	
