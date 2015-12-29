@@ -19,9 +19,16 @@ class NewVisitorTest(StaticLiveServerTestCase):
 
 	@classmethod
 	def tearDownClass(cls):
-		if cls.server_url == cls.live_server_url:
-			super().tearDownClass()
-
+		# if cls.server_url == cls.live_server_url:
+			# super().tearDownClass()
+		
+		#Experimental bug-suppressing code
+		if hasattr(cls, 'server_thread'):
+            # test if server_thread attribute is available (as there may have been an exception in setUpClass)
+            # setting ignore_errors flag on WSGI server thread to avoid unwanted 10054
+			cls.server_thread.httpd.ignore_errors = True
+		#cls.browser.quit() # cls.wd is the WebDriver instance
+		super(StaticLiveServerTestCase, cls).tearDownClass()
 
 	def setUp (self):
 		self.browser = webdriver.Firefox()
